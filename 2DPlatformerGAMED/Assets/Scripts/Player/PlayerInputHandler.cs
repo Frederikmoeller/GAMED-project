@@ -43,6 +43,11 @@ public class PlayerInputHandler : MonoBehaviour
         RegisterInputActions();
     }
 
+    void Update()
+    {
+        
+    }
+
     private void RegisterInputActions()
     {
         _moveAction.performed += context => MoveInput = context.ReadValue<Vector2>();
@@ -51,8 +56,8 @@ public class PlayerInputHandler : MonoBehaviour
         _jumpAction.performed += context => JumpInput = true;
         _jumpAction.canceled += context => JumpInput = false;
         
-        _dashAction.performed += context => JumpInput = true;
-        _dashAction.canceled += context => JumpInput = false;
+        _dashAction.performed += context => DashInput = true;
+        _dashAction.canceled += context => DashInput = false;
     }
 
     private void OnEnable()
@@ -67,11 +72,5 @@ public class PlayerInputHandler : MonoBehaviour
         _moveAction.Disable();
         _jumpAction.Disable();
         _dashAction.Disable();
-    }
-
-    public void OnMove(InputValue value)
-    {
-        var v = value.Get<Vector2>();
-        print(v);
     }
 }

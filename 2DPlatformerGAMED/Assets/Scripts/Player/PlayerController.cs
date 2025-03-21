@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -25,9 +26,31 @@ public class PlayerController : MonoBehaviour
     private float _gravityScale;
     private bool _jumpInputReleased;
     private bool _isJumping;
-    
     private float _lastGroundedTime;
     private float _lastJumpTime;
+    
+    
+    [Header("Dash Parameters")]
+    [SerializeField] private float _dashTime = 0.2f;
+    [SerializeField] private bool _isDashing;
+    [SerializeField] private bool _dashButtonHeld;
+    [SerializeField] private float _dashForce;
+    private Vector2[] _directions = new Vector2[]
+    {
+        new Vector2(1, 0),   // Right
+        new Vector2(1, 1).normalized,   // Up-Right
+        new Vector2(0, 1),   // Up
+        new Vector2(-1, 1).normalized,  // Up-Left
+        new Vector2(-1, 0),  // Left
+        new Vector2(-1, -1).normalized, // Down-Left
+        new Vector2(0, -1),  // Down
+        new Vector2(1, -1).normalized   // Down-Right
+    };
+
+    [Header("Energy")] 
+    [SerializeField] private int _maxEnergy;
+    [SerializeField] private int _currentEnergy;
+
 
     private Rigidbody2D _rigidbody2D;
 
@@ -52,7 +75,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         GroundCheck();
-        HandleMovement();
+        if (_isDashing == false)
+        {
+            HandleMovement();
+        }
         Friction();
 
         if (_inputHandler.JumpInput)
@@ -64,7 +90,22 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (_inputHandler.JumpInput == false)
+        if (_inputHandler.DashInput)
+        {
+            if (_isGrounded == false && _currentEnergy > 0 && _dashButtonHeld == false && _isDashing == false)
+            {
+                print($"Raw input: {_inputHandler.MoveInput} vs dash direction: {DashDirection()}");
+                StartCoroutine(HandleDash(DashDirection()));
+            }
+            _dashButtonHeld = true;
+        }
+
+        if (_inputHandler.DashInput == false)
+        {
+            _dashButtonHeld = false;
+        }
+
+        if (_inputHandler.JumpInput == false && _isDashing == false)
         {
             if (_rigidbody2D.linearVelocityY > 0 && _isJumping)
             {
@@ -76,7 +117,14 @@ public class PlayerController : MonoBehaviour
 
         if (_rigidbody2D.linearVelocityY < 0)
         {
-            _rigidbody2D.gravityScale = _gravityScale * _fallGravityMultiplier;
+            if (_isDashing)
+            {
+                _rigidbody2D.gravityScale = 0;
+            }
+            else
+            {
+                _rigidbody2D.gravityScale = _gravityScale * _fallGravityMultiplier;
+            }
         }
         else
         {
@@ -85,16 +133,45 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private Vector2 DashDirection()
+    {
+        Vector2 input = _inputHandler.MoveInput.normalized;
+        if (input == Vector2.zero) return Vector2.zero;
+
+        Vector2 bestDirection = _directions[2];
+        float bestAngle = Vector2.Angle(input, bestDirection);
+
+        foreach (var direction in _directions)
+        {
+            float angle = Vector2.Angle(input, direction);
+            if (angle < bestAngle)
+            {
+                bestAngle = angle;
+                bestDirection = direction;
+            }
+        }
+        return bestDirection;
+    }
+
     private void HandleMovement()
     {
-        float targetSpeed = _inputHandler.MoveInput.x * _maxMoveSpeed;
+        Vector2 input = _inputHandler.MoveInput;
 
-        float speedDifference = targetSpeed - _rigidbody2D.linearVelocityX;
+        if (input.sqrMagnitude > 1)
+        {
+            input = input.normalized;
+        }
 
-        float accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f) ? _acceleration : _decceleration;
+        input.x = Mathf.RoundToInt(input.x);
 
-        float movement = Mathf.Pow(Mathf.Abs(speedDifference) * accelerationRate, _velPower) * Mathf.Sign(speedDifference);
-        
+        Vector2 targetVelocity = input * _maxMoveSpeed;
+        Vector2 speedDifference = targetVelocity - _rigidbody2D.linearVelocity;
+
+        float accelerationRate = (targetVelocity.sqrMagnitude > 0.01f) ? _acceleration : _decceleration;
+
+        float movement =
+            Mathf.Pow(Mathf.Abs(speedDifference.x) * accelerationRate, _velPower) * Mathf.Sign(speedDifference.x);
+
         _rigidbody2D.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
 
@@ -106,6 +183,16 @@ public class PlayerController : MonoBehaviour
         _lastJumpTime = 0; 
         _isJumping = true;
         _jumpInputReleased = false;
+    }
+
+    private IEnumerator HandleDash(Vector2 dashDirection)
+    {
+        _isDashing = true;
+        _rigidbody2D.linearVelocityY = 0;
+        _rigidbody2D.AddForce(dashDirection * _dashForce, ForceMode2D.Impulse);
+        _currentEnergy--;
+        yield return new WaitForSeconds(_dashTime);
+        _isDashing = false;
     }
 
     private void Friction()
@@ -120,20 +207,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool GroundCheck()
+    private void GroundCheck()
     {
         if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))
         {
+            _currentEnergy = _maxEnergy;
             _lastGroundedTime = _jumpCoyoteTime;
             _isGrounded = true;
             _isJumping = false;
-            return true;
         }
         else
         {
             _lastGroundedTime -= Time.fixedDeltaTime;
             _isGrounded = false;
-            return false;
         }
     }
 }
