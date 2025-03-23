@@ -13,6 +13,7 @@ public class CheckGround : MonoBehaviour
         {
             move.SetGround(true);
             move.VerticalSpeed = 0;
+            move.engergy = 3;
         }
     }
 
