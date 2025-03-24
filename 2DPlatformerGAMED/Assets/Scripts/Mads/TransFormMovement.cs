@@ -10,33 +10,39 @@ public class TransFormMovement : MonoBehaviour
     public LayerMask groundLayerMask;
 
     //public Transform groundCheck;
-    private bool Isground;
-    [SerializeField] private bool MustNotFall;
-    public float VerticalSpeed;
-    public float HorizontalSpeed;
-    public int engergy = 3;
+    private bool _isground;
+    [SerializeField] private bool _mustNotFall;
+    [SerializeField] private float _verticalSpeed;
+    [SerializeField] private float _horizontalSpeed;
+    public int energy = 3;
 
-    public float jumpSpeed = 5;
+    [SerializeField] private float _jumpSpeed = 5;
 
-    [SerializeField] private bool jumping = false;
-    [SerializeField] private bool dashing = false;
-    [SerializeField] private float gravity = -5f;
-    [SerializeField] private float dashpeed = 5f;
-    [SerializeField] private float jumptime=0.1f;
-    [SerializeField] private float dashtime=0.1f;
-    public Vector2 movement;
-    public float movespeed;
+    [SerializeField] private bool _jumping = false;
+    [SerializeField] private bool _dashing = false;
+    [SerializeField] private float _gravity = -5f;
+    [SerializeField] private float _dashpeed = 5f;
+    [SerializeField] private float _jumpTime=0.1f;
+    [SerializeField] private float _dashTime=0.1f;
+    [SerializeField] private Vector2 _movement;
+    [SerializeField] private float _moveSpeed;
+    private PlayerInputHandler _inputHandler;
 
     // Update is called once per frame
+
+    private void Awake()
+    {
+        _inputHandler = PlayerInputHandler.Instance;
+    }
     void Update()
     {
         //CheckGround();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (_inputHandler.JumpInput)
         {
             Activity(Jumprutine());
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl)&&!Isground)
+        if (_inputHandler.DashInput&&!_isground)
         {
             
             Activity(Dashrutine());
@@ -50,7 +56,7 @@ public class TransFormMovement : MonoBehaviour
         Isground = hit.collider !=null;
         if (Isground)
         {
-            VerticalSpeed=0;
+            tticalSpeed=0;
         }
         else if(!Isground)
         {
@@ -61,8 +67,8 @@ public class TransFormMovement : MonoBehaviour
 
     public void SetGround(bool ground)
     {
-        Isground = ground;
-        MustNotFall = ground;
+        _isground = ground;
+        _mustNotFall = ground;
         
         
     }
@@ -71,10 +77,10 @@ public class TransFormMovement : MonoBehaviour
     void ApplyMovement()
     {
         float walking = 0;
-        if (!dashing)
+        if (!_dashing)
         {
-            walking = Input.GetAxis("Horizontal") * movespeed; 
-            HorizontalSpeed = walking;
+            walking = _inputHandler.MoveInput.x * _moveSpeed; 
+            _horizontalSpeed = walking;
         }
         
 
@@ -86,50 +92,50 @@ public class TransFormMovement : MonoBehaviour
         }
       
 
-        if (dashing)
+        if (_dashing)
         {
-            HorizontalSpeed = dashpeed*transform.localScale.x;
+            _horizontalSpeed = _dashpeed*transform.localScale.x;
         }
      
 
 
-        if (MustNotFall)
+        if (_mustNotFall)
         {
-            VerticalSpeed = 0;
+            _verticalSpeed = 0;
         }
-        else if (!jumping)
+        else if (!_jumping)
         {
-            VerticalSpeed += gravity * Time.deltaTime; 
+            _verticalSpeed += _gravity * Time.deltaTime; 
         }
 
         
-        if (jumping)
+        if (_jumping)
         {
-            VerticalSpeed = jumpSpeed;
+            _verticalSpeed = _jumpSpeed;
         }
-        movement = new Vector2(HorizontalSpeed, VerticalSpeed);
+        _movement = new Vector2(_horizontalSpeed, _verticalSpeed);
         
-        transform.Translate(movement*Time.deltaTime);
+        transform.Translate(_movement*Time.deltaTime);
     }
 
 
     private void Activity(IEnumerator routine)
     {
-        if (!Isground)
+        if (!_isground)
         {
-            if (engergy > 0)
+            if (energy > 0)
             {
-                engergy--;
+                energy--;
                 StopCoroutine(routine);
                 StartCoroutine(routine);
             }
-            if(engergy<=0)
+            if(energy<=0)
             {
                 //but in a grunt sound or something here
             }
         }
 
-        if (Isground)
+        if (_isground)
         {
             StopCoroutine(routine);
             StartCoroutine(routine);
@@ -142,22 +148,22 @@ public class TransFormMovement : MonoBehaviour
     private IEnumerator Jumprutine()
     {
 
-        jumping = true;
+        _jumping = true;
         
         
-        yield return new WaitForSeconds(jumptime);
+        yield return new WaitForSeconds(_jumpTime);
         
-        jumping = false;
+        _jumping = false;
 
     }
 
     private IEnumerator Dashrutine()
     {
-        MustNotFall = true;
-        dashing = true;
-        yield return new WaitForSeconds(dashtime);
-        dashing = false;
-        MustNotFall = Isground;
+        _mustNotFall = true;
+        _dashing = true;
+        yield return new WaitForSeconds(_dashTime);
+        _dashing = false;
+        _mustNotFall = _isground;
     }
 
 }

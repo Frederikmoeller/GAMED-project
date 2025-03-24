@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class CheckGround : MonoBehaviour
 {
 
     public TransFormMovement move;
+    [SerializeField] private float _coyoteTime = 0.15f;
    
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -12,8 +14,8 @@ public class CheckGround : MonoBehaviour
         if (((1 << collision.gameObject.layer) & move.groundLayerMask) != 0)
         {
             move.SetGround(true);
-            move.VerticalSpeed = 0;
-            move.engergy = 3;
+            
+            move.energy = 3;
         }
     }
 
@@ -22,8 +24,8 @@ public class CheckGround : MonoBehaviour
         if (((1 << other.gameObject.layer) & move.groundLayerMask) != 0)
         {
             move.SetGround(true);
-            move.VerticalSpeed = 0;
-            move.engergy = 3;
+            
+            move.energy = 3;
         }
     }
 
@@ -32,8 +34,14 @@ public class CheckGround : MonoBehaviour
     {
         if (((1 << collision.gameObject.layer) & move.groundLayerMask) != 0)
         {
-            move.SetGround(false);
+            StartCoroutine(coyoteTime());
         }
     }
-    
+
+
+    private IEnumerator coyoteTime()
+    {
+        yield return new WaitForSeconds(_coyoteTime);
+        move.SetGround(false);
+    }
 }
