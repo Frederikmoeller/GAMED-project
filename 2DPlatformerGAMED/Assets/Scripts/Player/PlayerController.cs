@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _inputHandler = PlayerInputHandler.Instance;
+        _inputHandler = PlayerInputHandler.PlayerInputHandlerInstance;
         _gravityScale = _rigidbody2D.gravityScale;
         _jumpForce = Mathf.Sqrt(_jumpHeight * Physics2D.gravity.y * _gravityScale * -2) * _rigidbody2D.mass;
     }
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_rigidbody2D.linearVelocityY > 0 && _isJumping)
             {
-                _rigidbody2D.AddForce(Vector2.down * _rigidbody2D.linearVelocityY * (1 - _jumpCutMultiplier), ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.down * (_rigidbody2D.linearVelocityY * (1 - _jumpCutMultiplier)), ForceMode2D.Impulse);
             }
             _jumpInputReleased = true;
             _lastJumpTime = 0;

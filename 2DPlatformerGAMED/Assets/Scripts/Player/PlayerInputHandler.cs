@@ -22,14 +22,14 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpInput { get; private set; }
     public bool DashInput { get; private set; }
     
-    public static PlayerInputHandler Instance { get; private set; }
+    public static PlayerInputHandler PlayerInputHandlerInstance { get; private set; }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if (Instance == null)
+        if (PlayerInputHandlerInstance == null)
         {
-            Instance = this;
+            PlayerInputHandlerInstance = this;
             DontDestroyOnLoad(gameObject);
         }
         else

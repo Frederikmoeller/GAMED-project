@@ -32,7 +32,7 @@ public class TransFormMovement : MonoBehaviour
 
     private void Awake()
     {
-        _inputHandler = PlayerInputHandler.Instance;
+        _inputHandler = PlayerInputHandler.PlayerInputHandlerInstance;
     }
     void Update()
     {
