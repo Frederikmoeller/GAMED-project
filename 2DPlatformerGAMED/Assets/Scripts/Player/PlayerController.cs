@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Parameters")] 
     [SerializeField] private float _jumpForce = 5.0f;
-    [SerializeField] private bool _isGrounded;
+    public bool isGrounded;
     [SerializeField] private float _jumpHeight;
     [SerializeField] private Transform _groundCheckPoint;
     [SerializeField] private Vector2 _groundCheckSize;
@@ -55,11 +56,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
 
     private PlayerInputHandler _inputHandler;
+    [SerializeField] private PlayerAnimation _animationHandler;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
+        
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _inputHandler = PlayerInputHandler.PlayerInputHandlerInstance;
         _gravityScale = _rigidbody2D.gravityScale;
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
         if (_inputHandler.DashInput)
         {
-            if (_isGrounded == false && _currentEnergy > 0 && _dashButtonHeld == false && _isDashing == false)
+            if (isGrounded == false && _currentEnergy > 0 && _dashButtonHeld == false && _isDashing == false)
             {
                 print($"Raw input: {_inputHandler.MoveInput} vs dash direction: {DashDirection()}");
                 StartCoroutine(HandleDash(DashDirection()));
@@ -177,6 +180,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
+        _animationHandler.Jump();
         _rigidbody2D.linearVelocityY = 0;
         _rigidbody2D.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         _lastGroundedTime = 0;
@@ -187,12 +191,14 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator HandleDash(Vector2 dashDirection)
     {
+        _animationHandler.DashMove(true);
         _isDashing = true;
         _rigidbody2D.linearVelocityY = 0;
         _rigidbody2D.AddForce(dashDirection * _dashForce, ForceMode2D.Impulse);
         _currentEnergy--;
         yield return new WaitForSeconds(_dashTime);
         _isDashing = false;
+        _animationHandler.DashMove(false);
     }
 
     private void Friction()
@@ -211,15 +217,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))
         {
+            _animationHandler.AnimationGroundCheck();
             _currentEnergy = _maxEnergy;
             _lastGroundedTime = _jumpCoyoteTime;
-            _isGrounded = true;
+            isGrounded = true;
             _isJumping = false;
         }
         else
         {
             _lastGroundedTime -= Time.fixedDeltaTime;
-            _isGrounded = false;
+            isGrounded = false;
         }
     }
 }
