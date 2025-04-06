@@ -267,7 +267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc101ea7cb79844395c9de554c83416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDying: 0
   _checkPoint: {fileID: 0}
+  pcRigid: {fileID: 6898067123208050390}
+  _playerAnimation: {fileID: 2408494387110193507}
+  _playerAnimator: {fileID: 3791438786920046540}
 --- !u!1001 &6627661960807693906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -328,6 +332,10 @@ PrefabInstance:
       propertyPath: _controller
       value: 
       objectReference: {fileID: 3414353692214749387}
+    - target: {fileID: 8833423169126012721, guid: 6cad33c87f2650940b0eadff70d82324, type: 3}
+      propertyPath: _playerCharacter
+      value: 
+      objectReference: {fileID: 6716453381563798631}
     - target: {fileID: 8833423169126012721, guid: 6cad33c87f2650940b0eadff70d82324, type: 3}
       propertyPath: _playerRigidbody
       value: 

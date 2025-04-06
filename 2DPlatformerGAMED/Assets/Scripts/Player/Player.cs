@@ -1,10 +1,14 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool isDying;
     [SerializeField] private Transform _checkPoint;
-
+    [SerializeField] private Rigidbody2D pcRigid;
+    [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private Animator _playerAnimator;
     private GameManager _gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,12 +22,33 @@ public class Player : MonoBehaviour
         
     }
 
+    private IEnumerator Death()
+    {
+        pcRigid.constraints  = RigidbodyConstraints2D.FreezeAll;
+        
+
+        isDying=true;
+        _playerAnimation.Death();
+        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_playerAnimator.GetCurrentAnimatorStateInfo(0).length);
+        
+        transform.position = _checkPoint.position;
+        //_gameManager.deaths++;
+        isDying = false;
+        _playerAnimation.Death();
+        _playerAnimation.Respawn(true);
+        yield return new WaitForSeconds(_playerAnimator.GetCurrentAnimatorStateInfo(0).length);
+        _playerAnimation.Respawn(false);
+        pcRigid.constraints = RigidbodyConstraints2D.None;
+        pcRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+       
+    }
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("DeathTrigger"))
         {
-            transform.position = _checkPoint.position;
-            _gameManager.deaths++;
+            Debug.Log("run corutine");
+            StartCoroutine(Death());
         }
 
         if (other.CompareTag("CheckPoint"))

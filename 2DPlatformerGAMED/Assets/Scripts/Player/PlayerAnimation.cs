@@ -8,14 +8,33 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] private Transform _animationTransform;
     [SerializeField] private Rigidbody2D _playerRigidbody;
     [SerializeField] private PlayerController _controller;
+    [SerializeField] private Player _playerCharacter;
     private bool _facingRight=true;
     private bool _isDashing;
+    [SerializeField] private GameObject [] _objects;
+    private Vector2[] originalPositions;
 
 
+    public void Exsplode()
+    {
+        originalPositions = new Vector2[_objects.Length];
+        for (int i = 0; i < _objects.Length; i++)
+        {
+            originalPositions[i] = _objects[i].transform.position;
+            _objects[i].SetActive(true);
+        }
+    }
+    
     public void AnimationGroundCheck()
     {
         _animator.SetBool("falling", false);
     }
+
+    public void Respawn(bool spawning)
+    {
+        _animator.SetBool("respawning", spawning);
+    }
+
 
     public void Jump()
     {
@@ -28,6 +47,11 @@ public class PlayerAnimation : MonoBehaviour
         _isDashing = dashing;
     }
 
+    public void Death()
+    {
+        _animator.SetBool("death",_playerCharacter.isDying);
+        Debug.Log("character is dying = " +_playerCharacter.isDying);
+    }
     private void Update()
     {
         if (Mathf.Abs(_playerRigidbody.linearVelocityX) > 0.1)
