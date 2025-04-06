@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public int deaths;
     public int collectibles;
+    public int totalCollectibles;
     public List<Levels> LevelList = new();
     public static GameManager GameManagerInstance { get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -195,18 +196,18 @@ public class GameManager : MonoBehaviour
         return Mathf.Round(totalProgress * 100f * 10f) / 10f;
     }
 
-    public (string time, float progress) PeekSaveSlot(int slot)
+    public (string time, float progress, int deaths, int collectibles) PeekSaveSlot(int slot)
     {
         string path = GetSavePath(slot);
 
         if (!File.Exists(path))
         {
-            return ("No Save", 0f);
+            return ("No Save", 0f, 0, 0);
         }
 
         string json = File.ReadAllText(path);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-        return (data.saveTime, data.progressPercent);
+        return (data.saveTime, data.progressPercent, data.deaths, data.collectibles);
     }
 }
 
