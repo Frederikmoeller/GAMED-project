@@ -13,14 +13,17 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string _move = "Move";
     [SerializeField] private string _jump = "Jump";
     [SerializeField] private string _dash = "Dash";
+    [SerializeField] private string _pause = "Pause";
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _dashAction;
+    private InputAction _pauseAction;
     
     public Vector2 MoveInput { get; private set; }
     public bool JumpInput { get; private set; }
     public bool DashInput { get; private set; }
+    public bool PauseInput { get; private set; }
     
     public static PlayerInputHandler PlayerInputHandlerInstance { get; private set; }
     
@@ -40,6 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
         _moveAction = _playerControls.FindActionMap(actionMapName).FindAction(_move);
         _jumpAction = _playerControls.FindActionMap(actionMapName).FindAction(_jump);
         _dashAction = _playerControls.FindActionMap(actionMapName).FindAction(_dash);
+        _pauseAction = _playerControls.FindActionMap(actionMapName).FindAction(_pause);
         RegisterInputActions();
     }
 
@@ -58,6 +62,9 @@ public class PlayerInputHandler : MonoBehaviour
         
         _dashAction.performed += context => DashInput = true;
         _dashAction.canceled += context => DashInput = false;
+        
+        _pauseAction.performed += context => PauseInput = true;
+        _pauseAction.canceled += context => PauseInput = false;
     }
 
     private void OnEnable()
@@ -65,6 +72,7 @@ public class PlayerInputHandler : MonoBehaviour
         _moveAction.Enable();
         _jumpAction.Enable();
         _dashAction.Enable();
+        _pauseAction.Enable();
     }
     
     private void OnDisable()
@@ -72,5 +80,6 @@ public class PlayerInputHandler : MonoBehaviour
         _moveAction.Disable();
         _jumpAction.Disable();
         _dashAction.Disable();
+        _pauseAction.Disable();
     }
 }

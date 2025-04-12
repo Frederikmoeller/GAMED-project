@@ -134,6 +134,11 @@ public class PlayerController : MonoBehaviour
             _rigidbody2D.gravityScale = _gravityScale;
         }
 
+        if (_inputHandler.PauseInput)
+        {
+            GameManager.GameManagerInstance.PauseGame();
+        }
+
     }
 
     private Vector2 DashDirection()

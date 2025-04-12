@@ -209,6 +209,50 @@ public class GameManager : MonoBehaviour
         SaveData data = JsonUtility.FromJson<SaveData>(json);
         return (data.saveTime, data.progressPercent, data.deaths, data.collectibles);
     }
+
+    public void DeleteSave(int slotToDelete)
+    {
+        string pathToDelete = Path.Combine(Application.persistentDataPath, $"Save_slot_{slotToDelete}.json");
+        
+        //Delete the actual file
+        if (File.Exists(pathToDelete))
+        {
+            File.Delete(pathToDelete);
+        }
+
+        int currentSlot = slotToDelete + 1;
+
+        while (true)
+        {
+            string currentPath = Path.Combine(Application.persistentDataPath, $"Save_slot_{currentSlot}.json");
+            string newPath = Path.Combine(Application.persistentDataPath, $"Save_slot_{currentSlot - 1}.json");
+
+            if (File.Exists(currentPath))
+            {
+                try
+                {
+                    File.Move(currentPath, newPath);
+                    currentSlot++;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Error renaming file {currentPath} to {newPath}: {e.Message}");
+                    break;
+                }
+
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        UIManager.Instance.PauseUI();
+    }
 }
 
 [Serializable]
