@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -58,7 +59,8 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag("Goal"))
         {
-            
+            GameManager.GameManagerInstance.MarkLevelCleared(SceneManager.GetActiveScene().name);
+            GameManager.GameManagerInstance.LoadLevel(GameManager.GameManagerInstance.currentLevel + 1);
         }
     }
 }

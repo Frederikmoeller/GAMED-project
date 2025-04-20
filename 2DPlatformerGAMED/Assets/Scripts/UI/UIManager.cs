@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.GameManagerInstance.LoadAutoSave();
 
-        var lastClearedLevel = GameManager.GameManagerInstance.LevelList.FindLast(l => l.Cleared);
+        var lastClearedLevel = GameManager.GameManagerInstance.levelList.FindLast(l => l.Cleared);
 
         if (lastClearedLevel != null)
         {

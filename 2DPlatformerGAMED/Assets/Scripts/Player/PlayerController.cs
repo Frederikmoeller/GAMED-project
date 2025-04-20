@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private bool _dashButtonHeld;
     [SerializeField] private float _dashForce;
+    [SerializeField] private TrailRenderer _trail;
     private Vector2[] _directions = new Vector2[]
     {
         new Vector2(1, 0),   // Right
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        _trail.emitting = _isDashing;
         GroundCheck();
         if (_isDashing == false)
         {

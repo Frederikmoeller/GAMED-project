@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     public int deaths;
     public int collectibles;
     public int totalCollectibles;
-    public List<Levels> LevelList = new();
+    public int currentLevel;
+    public List<Levels> levelList = new();
     public static GameManager GameManagerInstance { get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -33,9 +34,10 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int index)
     {
-        if (index >= 0 && index < LevelList.Count)
+        if (index >= 0 && index < levelList.Count)
         {
-            SceneManager.LoadScene(LevelList[index].SceneName);
+            SceneManager.LoadScene(levelList[index].SceneName);
+            currentLevel = index;
         }
         else
         {
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevelByWorldAndLevel(int world, int level)
     {
-        var match = LevelList.Find(l => l.World == world && l.Level == level);
+        var match = levelList.Find(l => l.World == world && l.Level == level);
 
         if (match != null)
         {
@@ -59,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     public void MarkLevelCleared(string sceneName)
     {
-        var match = LevelList.Find(l => l.SceneName == sceneName);
+        var match = levelList.Find(l => l.SceneName == sceneName);
 
         if (match != null)
         {
@@ -67,7 +69,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public List<Levels> GetAllLevels() => LevelList;
+    public List<Levels> GetAllLevels() => levelList;
 
     public void SaveGame(int slot)
     {
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
         {
             deaths = deaths,
             collectibles = collectibles,
-            savedLevels = LevelList,
+            savedLevels = levelList,
             saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
             progressPercent = CalculateProgress()
         };
@@ -97,7 +99,7 @@ public class GameManager : MonoBehaviour
 
             deaths = data.deaths;
             collectibles = data.collectibles;
-            LevelList = data.savedLevels;
+            levelList = data.savedLevels;
             
             Debug.Log("Game loaded.");
         }
@@ -139,7 +141,7 @@ public class GameManager : MonoBehaviour
         {
             deaths = deaths,
             collectibles = collectibles,
-            savedLevels = LevelList,
+            savedLevels = levelList,
             saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
             progressPercent = CalculateProgress()
         };
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
 
             deaths = data.deaths;
             collectibles = data.collectibles;
-            LevelList = data.savedLevels;
+            levelList = data.savedLevels;
             
             Debug.Log("Auto-save loaded.");
         }
@@ -177,14 +179,14 @@ public class GameManager : MonoBehaviour
 
     private float CalculateProgress()
     {
-        if (LevelList == null || LevelList.Count == 0)
+        if (levelList == null || levelList.Count == 0)
         {
             return 0;
         }
 
-        int clearedLevels = LevelList.FindAll(l => l.Cleared).Count;
+        int clearedLevels = levelList.FindAll(l => l.Cleared).Count;
 
-        int totalLevels = LevelList.Count;
+        int totalLevels = levelList.Count;
         int totalCollectibles = 100;
 
         float levelProgress = clearedLevels / (float)totalLevels;
