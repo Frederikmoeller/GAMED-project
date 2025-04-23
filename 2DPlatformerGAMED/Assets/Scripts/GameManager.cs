@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -32,12 +33,17 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void LoadLevel(int index)
+    public IEnumerator LoadLevel(int index)
     {
+        UIManager.Instance.fadeAnimator.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1);
+        
         if (index >= 0 && index < levelList.Count)
         {
             SceneManager.LoadScene(levelList[index].SceneName);
             currentLevel = index;
+            UIManager.Instance.fadeAnimator.SetTrigger("End");
         }
         else
         {

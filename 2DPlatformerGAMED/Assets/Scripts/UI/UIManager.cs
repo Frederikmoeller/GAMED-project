@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _saveSlotPrefab;
     [SerializeField] private GameObject _emptySaveSlotPrefab;
     [SerializeField] private EventSystem eventSystem;
+    public Animator fadeAnimator;
     public SaveMode currentMode { get; private set; }
     
     
@@ -46,10 +47,6 @@ public class UIManager : MonoBehaviour
         if (eventSystem == null)
         {
             eventSystem = FindFirstObjectByType<EventSystem>();
-        }
-
-        if (eventSystem != null)
-        {
             DontDestroyOnLoad(eventSystem.gameObject);
         }
     }
@@ -69,18 +66,18 @@ public class UIManager : MonoBehaviour
 
         if (lastClearedLevel != null)
         {
-            SceneManager.LoadScene(lastClearedLevel.SceneName);
+            StartCoroutine(GameManager.GameManagerInstance.LoadLevel(GameManager.GameManagerInstance.levelList.IndexOf(lastClearedLevel)));
         }
         else
         {
-            GameManager.GameManagerInstance.LoadLevel(0);
+            StartCoroutine(GameManager.GameManagerInstance.LoadLevel(1));
         }
         CloseWindow();
     }
 
     public void OnStartGameClicked()
     {
-        GameManager.GameManagerInstance.LoadLevel(0);
+        StartCoroutine(GameManager.GameManagerInstance.LoadLevel(1));
         CloseWindow();
     }
 
@@ -90,7 +87,7 @@ public class UIManager : MonoBehaviour
         _settingsMenu.SetActive(false);
         _saveMenu.SetActive(false);
         _loadMenu.SetActive(false);
-        SceneManager.LoadScene("TitleScreen");
+        StartCoroutine(GameManager.GameManagerInstance.LoadLevel(SceneManager.GetSceneByBuildIndex(0).buildIndex));
     }
 
     public void OpenLoadMenu()
@@ -170,7 +167,7 @@ public class UIManager : MonoBehaviour
 
     public void PauseUI()
     {
-        _pauseMenu.SetActive(true);
+        _pauseMenu.SetActive(!_pauseMenu.activeSelf);
     }
 
     public void RefreshSaveSlots()

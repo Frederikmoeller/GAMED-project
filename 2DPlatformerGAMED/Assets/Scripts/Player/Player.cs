@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Goal"))
         {
             GameManager.GameManagerInstance.MarkLevelCleared(SceneManager.GetActiveScene().name);
-            GameManager.GameManagerInstance.LoadLevel(GameManager.GameManagerInstance.currentLevel + 1);
+            StartCoroutine(GameManager.GameManagerInstance.LoadLevel(GameManager.GameManagerInstance.currentLevel + 1));
         }
     }
 }
