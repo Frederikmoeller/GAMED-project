@@ -75,6 +75,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void RefilEnergy()
+    {
+        _currentEnergy = _maxEnergy;
+    }
+    
     // Update is called once per frame
     void FixedUpdate()
     {
