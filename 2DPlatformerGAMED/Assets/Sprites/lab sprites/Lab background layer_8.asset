@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Lab background layer_8
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -2124109915, guid: ebaa081e1f9ed5841b3c26f798afc7c3, type: 3}
+  m_Sprite: {fileID: -2124109915, guid: fe7a5e3e9cc7dfa4595408215481f24e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
