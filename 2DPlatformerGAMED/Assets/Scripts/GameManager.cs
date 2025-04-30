@@ -45,6 +45,13 @@ public class GameManager : MonoBehaviour
             currentLevel = index;
             UIManager.Instance.fadeAnimator.SetTrigger("End");
         }
+        else if (index == levelList.Count)
+        {
+            SceneManager.LoadScene(0);
+            currentLevel = 0;
+            UIManager.Instance.fadeAnimator.SetTrigger("End");
+            UIManager.Instance.SetMainMenuActive();
+        }
         else
         {
             Debug.LogWarning("Invalid level index");

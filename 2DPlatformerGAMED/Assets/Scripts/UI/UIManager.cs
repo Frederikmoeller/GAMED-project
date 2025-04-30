@@ -58,6 +58,11 @@ public class UIManager : MonoBehaviour
         _continueButton.gameObject.SetActive(File.Exists(path));
     }
 
+    public void SetMainMenuActive()
+    {
+        _mainMenu.SetActive(true);
+    }
+
     public void OnContinueClicked()
     {
         GameManager.GameManagerInstance.LoadAutoSave();

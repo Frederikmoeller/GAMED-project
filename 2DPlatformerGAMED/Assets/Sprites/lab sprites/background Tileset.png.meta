@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fe7a5e3e9cc7dfa4595408215481f24e
+guid: 4be788c13e6ec384a9ccf40f53be56a1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7843753631858527916
-    second: Lab background layer_0
+      213: 209939636574062317
+    second: background Tileset_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,10 +48,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 5.9
+  spritePixelsToUnits: 5
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -114,7 +114,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lab background layer_0
+      name: background Tileset_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 33
         width: 16
-        height: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,20 +141,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cae8b94ce5c9adc60800000000000000
-      internalID: 7843753631858527916
+      spriteID: de68546bcfad9e200800000000000000
+      internalID: 209939636574062317
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lab background layer_1
+      name: background Tileset_1
       rect:
         serializedVersion: 2
         x: 16
-        y: 32
+        y: 33
         width: 16
-        height: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec7195f67fbcbdf42a3ce52d54e27d13
-      internalID: 1280107302
+      spriteID: 1db67d85ca78a484fa8040b13bdd12cf
+      internalID: -976964071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lab background layer_2
+      name: background Tileset_2
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
+        x: 34
+        y: 33
+        width: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +185,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fefe7f8b2601d9b42aa955d46e5af103
-      internalID: -1237527227
+      spriteID: fbe8ac2ee0486fb43bad59bba39a9ef7
+      internalID: 58214936
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lab background layer_3
+      name: background Tileset_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
+        x: 1
+        y: 17
+        width: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,86 +207,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 492f988daead00041ac6771c6f3492dd
-      internalID: -1939856451
+      spriteID: bd3a64b6bac5fc84aaa9aa68379425a1
+      internalID: 2128396485
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lab background layer_4
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bb5ea7e90556481418dcf674b74fb00c
-      internalID: 35425537
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lab background layer_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a7d0db9d6c65d004b9b8aa49e4397404
-      internalID: -422450371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lab background layer_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 162024a3a7f7e714f97be8fcbcfd1f67
-      internalID: 1474228847
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lab background layer_7
+      name: background Tileset_4
       rect:
         serializedVersion: 2
         x: 16
-        y: 0
+        y: 17
         width: 16
-        height: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -295,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14698206c3a505049b23a5d1768e9245
-      internalID: 905720147
+      spriteID: a5e44b6aaf628ce4591a5e1933ff5f24
+      internalID: 1688801418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lab background layer_8
+      name: background Tileset_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
-        width: 15
-        height: 16
+        x: 34
+        y: 17
+        width: 14
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -317,8 +251,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a6afe40d8c48484e88539c8aae3864c
-      internalID: -2124109915
+      spriteID: 2ab89d78318d4c247921d8c80147013a
+      internalID: -1746684406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: background Tileset_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c338c9a29761cc0458342a1c8dc30810
+      internalID: -619701572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: background Tileset_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 972b9b2b5c9c62b4c9d2f208327924d2
+      internalID: 1134571119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: background Tileset_8
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a797c36df1e06b49844576ec8127fcf
+      internalID: -1757488575
       vertices: []
       indices: 
       edges: []
@@ -327,7 +327,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2e1d86faca6e6ff47a13b3403e22ea37
+    spriteID: f8ba8277dc5b74b4d9d7ff19558198e5
     internalID: 0
     vertices: []
     indices: 
@@ -337,15 +337,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Lab background layer_0: 7843753631858527916
-      Lab background layer_1: 1280107302
-      Lab background layer_2: -1237527227
-      Lab background layer_3: -1939856451
-      Lab background layer_4: 35425537
-      Lab background layer_5: -422450371
-      Lab background layer_6: 1474228847
-      Lab background layer_7: 905720147
-      Lab background layer_8: -2124109915
+      background Tileset_0: 209939636574062317
+      background Tileset_1: -976964071
+      background Tileset_2: 58214936
+      background Tileset_3: 2128396485
+      background Tileset_4: 1688801418
+      background Tileset_5: -1746684406
+      background Tileset_6: -619701572
+      background Tileset_7: 1134571119
+      background Tileset_8: -1757488575
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
