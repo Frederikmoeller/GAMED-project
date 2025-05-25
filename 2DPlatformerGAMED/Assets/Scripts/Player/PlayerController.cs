@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputHandler _inputHandler;
     [SerializeField] private PlayerAnimation _animationHandler;
-
+    [SerializeField] private UIEnergy _uiEnergy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -75,6 +75,10 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public bool checkdashin()
+    {
+        return _isDashing;
+    }
     public void RefilEnergy()
     {
         _currentEnergy = _maxEnergy;
@@ -208,6 +212,7 @@ public class PlayerController : MonoBehaviour
         _rigidbody2D.linearVelocityY = 0;
         _rigidbody2D.AddForce(dashDirection * _dashForce, ForceMode2D.Impulse);
         _currentEnergy--;
+        _uiEnergy.changeEnergylvl(_currentEnergy);
         yield return new WaitForSeconds(_dashTime);
         _isDashing = false;
         _animationHandler.DashMove(false);
@@ -231,14 +236,17 @@ public class PlayerController : MonoBehaviour
         {
             _animationHandler.AnimationGroundCheck();
             _currentEnergy = _maxEnergy;
+            _uiEnergy.changeEnergylvl(_currentEnergy);
             _lastGroundedTime = _jumpCoyoteTime;
             isGrounded = true;
             _isJumping = false;
+           
         }
         else
         {
             _lastGroundedTime -= Time.fixedDeltaTime;
             isGrounded = false;
         }
+        _uiEnergy.toggleEnergy(!isGrounded);
     }
 }
