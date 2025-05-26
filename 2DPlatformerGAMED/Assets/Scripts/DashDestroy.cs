@@ -31,8 +31,19 @@ public class DashDestroy : MonoBehaviour
             _bossHp.damage();
         }
        
-        Destroy(_objectToDestroy);
+        _objectToDestroy.gameObject.SetActive(false);
        
        
-    } 
+    }
+
+    public void Reset()
+    {
+        if (_isDestroying)
+        {
+            _objectToDestroy.gameObject.SetActive(true);
+            _isDestroying = false;
+            _bossHp.Reset();
+        }
+       
+    }
 }

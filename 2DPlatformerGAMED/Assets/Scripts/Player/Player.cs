@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
         isDying = false;
         _playerAnimation.Death();
         _playerAnimation.Respawn(true);
+        BossHpReset bossHpReset = FindObjectOfType<BossHpReset>();
+        if (bossHpReset != null)
+        {
+            bossHpReset.CountDeath();
+        }
         yield return new WaitForSeconds(_playerAnimator.GetCurrentAnimatorStateInfo(0).length);
         _playerAnimation.Respawn(false);
         pcRigid.constraints = RigidbodyConstraints2D.None;
