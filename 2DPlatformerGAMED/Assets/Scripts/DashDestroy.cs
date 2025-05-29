@@ -10,21 +10,32 @@ public class DashDestroy : MonoBehaviour
     private bool _isDestroying = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        triggerDestruction(other);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        triggerDestruction(other);
+    }
+
+
+    private void triggerDestruction(Collider2D target)
+    {
+        if (target.CompareTag("Player"))
         {
-            if (other.GetComponent<PlayerController>().checkdashin())
+            if (target.GetComponent<PlayerController>().checkdashin())
             {
                 if (!_isDestroying)
                 {
-                    destruction();
+                    _isDestroying = true;
+                    StartCoroutine(destruction());
                 }
             }
         }
     }
-
-    private void destruction()
+    private IEnumerator destruction()
     {
-        _isDestroying = true; //never set it as true again, since this function dosnt need to be called more than once 
+         //never set it as true again, since this function dosnt need to be called more than once 
         //per script
         if (_bossHp !=null)
         {
@@ -32,18 +43,19 @@ public class DashDestroy : MonoBehaviour
         }
        
         _objectToDestroy.gameObject.SetActive(false);
-       
-       
+
+        yield return new WaitForSeconds(3f);
+
+        _isDestroying = false;
+        _objectToDestroy.gameObject.SetActive(true);
     }
 
     public void Reset()
     {
-        if (_isDestroying)
-        {
-            _objectToDestroy.gameObject.SetActive(true);
-            _isDestroying = false;
+   
+            //_objectToDestroy.gameObject.SetActive(true);
+            //_isDestroying = false;
             _bossHp.Reset();
-        }
        
     }
 }

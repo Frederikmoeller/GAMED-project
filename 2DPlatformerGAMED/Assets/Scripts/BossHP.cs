@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using System.Collections;
 public class BossHP : MonoBehaviour
 {
 
@@ -14,7 +15,7 @@ public class BossHP : MonoBehaviour
         _bossHealthBar.SetHealthBar(_bossHp);
         if (_bossHp == 0)
         {
-            Destroy(this.gameObject);
+            StartCoroutine(loadScene("TitleScreen"));
         }
     }
 
@@ -28,4 +29,11 @@ public class BossHP : MonoBehaviour
         _bossHp = _bossMaxHp;
         _bossHealthBar.SetHealthBar(_bossHp);
     }
+
+    private IEnumerator loadScene(string sceneName)
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(sceneName);
+    }
+    
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class BossHpReset : MonoBehaviour
 {
 
-    [SerializeField] private List<DashDestroy> _targets;
+    [SerializeField] private DashDestroy _target;
 
     [SerializeField] private int _deathCount = 0;
 
@@ -13,14 +13,13 @@ public class BossHpReset : MonoBehaviour
     [SerializeField] private HealthbarScript _heroHealthBar;
     private void resetBoss()
     {
-        foreach (var target in _targets)
-        {
-            target.Reset();
-        }
+        
+        _target.Reset();
     }
 
+    
 
-    public void CountDeath()
+    public bool CountDeath()
     {
         _deathCount++;
         _heroHealthBar.SetHealthBar(3-_deathCount);
@@ -29,6 +28,11 @@ public class BossHpReset : MonoBehaviour
             _deathCount = 0;
             resetBoss();
             _heroHealthBar.SetHealthBar(3-_deathCount);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
