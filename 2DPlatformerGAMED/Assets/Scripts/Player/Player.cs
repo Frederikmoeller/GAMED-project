@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _playerAnimator;
 
     [SerializeField] private bool _isDying=false;
+  
+    
     private GameManager _gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,7 +29,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator Death()
     {
-        bool bossfight = false;
+      
+
+        
         BossHpReset bossHpReset = FindObjectOfType<BossHpReset>();
         if (bossHpReset != null)
         {
@@ -37,10 +41,11 @@ public class Player : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.5f);
                 _isDying = false;
+                
                 yield break; 
             }
         }
-        
+        Debug.Log("Running the death script");
         pcRigid.constraints  = RigidbodyConstraints2D.FreezeAll;
         
 
@@ -65,19 +70,19 @@ public class Player : MonoBehaviour
         pcRigid.constraints = RigidbodyConstraints2D.None;
         pcRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         _isDying = false;
+        
 
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
         
-        if (other.CompareTag("DeathTrigger"))
+        if (other.CompareTag("DeathTrigger")&&!_isDying)
         {
-            if (!_isDying)
-            {
-                Debug.Log("run corutine");
-                _isDying = true;
-                StartCoroutine(Death()); 
-            }
+
+            _isDying = true;
+            Debug.Log("run corutine");
+            StartCoroutine(Death()); 
+ 
 
         }
 
