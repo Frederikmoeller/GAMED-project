@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-public class DashDestroy : MonoBehaviour
-{
 
+public class DashDisable : MonoBehaviour
+{
     [SerializeField] private GameObject _objectToDestroy;
-    [SerializeField] private BossHP _bossHp;
-    private bool _isDestroying = false;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         triggerDestruction(other);
@@ -17,44 +14,29 @@ public class DashDestroy : MonoBehaviour
     {
         triggerDestruction(other);
     }
-
-
     private void triggerDestruction(Collider2D target)
     {
         if (target.CompareTag("Player"))
         {
             if (target.GetComponent<PlayerController>().checkdashin())
             {
-                if (!_isDestroying)
-                {
-                    _isDestroying = true;
+
+
                     StartCoroutine(destruction());
-                }
+
             }
         }
     }
+
     private IEnumerator destruction()
     {
-
-        if (_bossHp !=null)
-        {
-            _bossHp.damage();
-        }
        
         _objectToDestroy.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(3f);
 
-        _isDestroying = false;
+
         _objectToDestroy.gameObject.SetActive(true);
     }
-
-    public void Reset()
-    {
-   
-            //_objectToDestroy.gameObject.SetActive(true);
-            //_isDestroying = false;
-            _bossHp.Reset();
-       
-    }
+    
 }
