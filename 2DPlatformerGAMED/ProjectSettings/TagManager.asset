@@ -8,6 +8,7 @@ TagManager:
   - CheckPoint
   - Goal
   - Window
+  - collectable
   layers:
   - Default
   - TransparentFX

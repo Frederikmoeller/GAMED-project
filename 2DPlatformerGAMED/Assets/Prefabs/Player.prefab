@@ -195,6 +195,7 @@ MonoBehaviour:
   _currentEnergy: 0
   _animationHandler: {fileID: 2408494387110193507}
   _uiEnergy: {fileID: 3072249925307352473}
+  _player: {fileID: 6716453381563798631}
 --- !u!50 &6898067123208050390
 Rigidbody2D:
   serializedVersion: 5
@@ -276,6 +277,9 @@ MonoBehaviour:
   pcRigid: {fileID: 6898067123208050390}
   _playerAnimation: {fileID: 2408494387110193507}
   _playerAnimator: {fileID: 3791438786920046540}
+  _isDying: 0
+  _collectable: {fileID: 0}
+  _collectableHeld: 0
 --- !u!96 &4449152307790160617
 TrailRenderer:
   serializedVersion: 3

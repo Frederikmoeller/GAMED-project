@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerAnimation _animationHandler;
     [SerializeField] private UIEnergy _uiEnergy;
 
+    [SerializeField] private Player _player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
     public void RefilEnergy()
     {
         _currentEnergy = _maxEnergy;
+        _uiEnergy.changeEnergylvl(_currentEnergy);
     }
     
     // Update is called once per frame
@@ -240,6 +242,15 @@ public class PlayerController : MonoBehaviour
             _lastGroundedTime = _jumpCoyoteTime;
             isGrounded = true;
             _isJumping = false;
+            if (_player._collectableHeld)
+            {
+                if (GameManager.GameManagerInstance != null)
+                {
+                    GameManager.GameManagerInstance.collectibles+=1;
+                    
+                }
+                _player.ResetCollectible();
+            }
            
         }
         else

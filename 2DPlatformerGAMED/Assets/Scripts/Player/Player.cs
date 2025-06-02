@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _playerAnimator;
 
     [SerializeField] private bool _isDying=false;
-  
+
+    [SerializeField] private collectable _collectable;
+    public bool _collectableHeld;
     
     private GameManager _gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,20 +47,25 @@ public class Player : MonoBehaviour
                 yield break; 
             }
         }
-        Debug.Log("Running the death script");
+        //Debug.Log("Running the death script");
         pcRigid.constraints  = RigidbodyConstraints2D.FreezeAll;
-        
-
+  
         isDying=true;
         _playerAnimation.Death();
-        //yield return new WaitForSeconds(1f);
+        
 
         
         yield return new WaitForSeconds(_playerAnimator.GetCurrentAnimatorStateInfo(0).length);
         
       
         transform.position = _checkPoint.position;
-        
+        if (_collectableHeld)
+        {
+            _collectable.turnOn();
+            yield return new WaitForSeconds(0.1f);
+            ResetCollectible();
+        }
+
         
         //_gameManager.deaths++;
         isDying = false;
@@ -73,6 +80,12 @@ public class Player : MonoBehaviour
         
 
     }
+
+    public void ResetCollectible()
+    {
+        _collectableHeld = false;
+        _collectable = null;
+    }
     public void OnTriggerEnter2D(Collider2D other)
     {
         
@@ -84,6 +97,12 @@ public class Player : MonoBehaviour
             StartCoroutine(Death()); 
  
 
+        }
+
+        if (other.CompareTag("collectable"))
+        {
+            _collectable = other.GetComponent<collectable>();
+            _collectableHeld = true;
         }
 
         if (other.CompareTag("CheckPoint"))
