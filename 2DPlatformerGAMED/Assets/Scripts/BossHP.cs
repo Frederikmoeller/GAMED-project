@@ -15,7 +15,7 @@ public class BossHP : MonoBehaviour
         _bossHealthBar.SetHealthBar(_bossHp);
         if (_bossHp == 0)
         {
-            StartCoroutine(loadScene("TitleScreen"));
+            StartCoroutine(loadScene());
         }
     }
 
@@ -30,10 +30,11 @@ public class BossHP : MonoBehaviour
         _bossHealthBar.SetHealthBar(_bossHp);
     }
 
-    private IEnumerator loadScene(string sceneName)
+    private IEnumerator loadScene()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(sceneName);
+        GameManager.GameManagerInstance.MarkLevelCleared(SceneManager.GetActiveScene().name);
+        StartCoroutine(GameManager.GameManagerInstance.LoadLevel(GameManager.GameManagerInstance.currentLevel + 1));
     }
     
 }
